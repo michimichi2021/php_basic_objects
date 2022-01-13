@@ -4,6 +4,7 @@ class Post
 {
   private $text;
   private static $count = 0;
+  public const VERSION = 0.1;
 
   public function __construct($text)
   {
@@ -18,6 +19,7 @@ class Post
   public static function showInfo()
   {
     printf('Count: %d' . PHP_EOL, self::$count);
+    printf('Version: %.1f' . PHP_EOL, self::VERSION);
   }
 }
 
@@ -29,3 +31,5 @@ $posts[0]->show();
 $posts[1]->show();
 
 Post::showInfo();
+
+echo Post::VERSION . PHP_EOL;
