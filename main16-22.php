@@ -1,4 +1,15 @@
 <?php
+
+trait LikeTrait
+{
+  private $likes = 0;
+
+  public function like()
+  {
+    $this->likes++;
+  }
+}
+
 interface LikeInterface
 {
   public function like();
@@ -17,12 +28,8 @@ abstract class BasePost
 
 class Post extends BasePost implements LikeInterface
 {
-  private $likes = 0;
+  use LikeTrait;
 
-  public function like()
-  {
-    $this->likes++;
-  }
   // final public function show()
   public function show()
   {
@@ -52,13 +59,9 @@ class SponsoredPost extends BasePost
 
 class PremiumPost extends BasePost implements LikeInterface
 {
+  use LikeTrait;
   private $price;
-  private $likes = 0;
 
-  public function like()
-  {
-    $this->likes++;
-  }
   public function __construct($text, $price)
   {
     parent::__construct($text);
@@ -77,8 +80,16 @@ $posts[1] = new Post('hello again');
 $posts[2] = new SponsoredPost('hello hello', 'dotinstall');
 $posts[3] = new PremiumPost('Hello there', 300);
 
-$posts[0]->like();
-$posts[3]->like();
+// $posts[0]->like();
+// $posts[3]->like();
+
+function processLikeable(LikeInterface $likeable)
+{
+  $likeable->like();
+}
+
+processLikeable($posts[0]);
+processLikeable($posts[3]);
 
 function processPost(BasePost $post)
 {
